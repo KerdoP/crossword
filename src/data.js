@@ -17,6 +17,12 @@ const data = [
         description: 'This is item 3',
         imageUrl: 'https://racismnoway.com.au/wp-content/uploads/2016/06/crossword-discrimination.gif',
     },
+    {
+        id: '4',
+        title: 'Item 4',
+        description: 'This is item 4',
+        imageUrl: 'https://racismnoway.com.au/wp-content/uploads/2016/06/crossword-discrimination.gif',
+    },
 ];
 
 export default data;

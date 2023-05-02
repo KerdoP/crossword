@@ -5,7 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 const NavigationBar = () => {
     return (
-        <Navbar fixed="top" bg="dark" variant="dark">
+        <Navbar fixed="top" style={{ backgroundColor: '#fafcfe' }}>
         <Container>
           <Navbar.Brand href="#list">Navbar</Navbar.Brand>
           <Nav className="me-auto">

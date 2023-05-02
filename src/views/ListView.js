@@ -8,35 +8,44 @@ import NavigationBar from '../components/NavigationBar';
 const ListView = () => {
   const navigate = useNavigate();
   return (
-    <div style={styles.container}>
-      <NavigationBar />
-      <div style={styles.listView}>
-      {data.map((item) => {
-        return (
-          <div
-            style={styles.item}
-            key={item.id}
-            onClick={() => {
-              navigate(`/DetailsView/${item.id}`);
-            }}
-          >
-            <div style={styles.titleDescriptionBox}>
-              <TitleDescriptionBox title={item.title} description={item.description} />
+    <div style={styles.mainContainer}>
+      <div style={styles.secondContainer}>
+        <NavigationBar />
+        <div style={styles.listView}>
+        {data.map((item) => {
+          return (
+            <div
+              style={styles.item}
+              key={item.id}
+              onClick={() => {
+                navigate(`/DetailsView/${item.id}`);
+              }}
+            >
+              <div style={styles.titleDescriptionBox}>
+                <TitleDescriptionBox title={item.title} description={item.description} />
+              </div>
+              <div style={styles.pictureBox}>
+                <PictureBox imageUrl={item.imageUrl} />
+              </div>
             </div>
-            <div style={styles.pictureBox}>
-              <PictureBox imageUrl={item.imageUrl} />
-            </div>
-          </div>
-        );
-      })}
+          );
+        })}
+        </div>
       </div>
     </div>
   );
 }
 
 const styles = {
-  container: {
-    backgroundColor: '#fff',
+  mainContainer: {
+    backgroundColor: '#fafcfe',
+  },
+  secondContainer: {
+    backgroundColor: '#eef1f7',
+    marginLeft: 56,
+    marginRight: 56,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
   },
   item: {
     display: 'flex',

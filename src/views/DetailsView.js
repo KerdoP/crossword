@@ -6,34 +6,52 @@ import NavigationBar from "../components/NavigationBar";
 
 const DetailsView = () => {
   return (
-    <div style={styles.container}>
-      <NavigationBar />
-      <div style={styles.listView}>
-      {data.map((item) => {
-        if (item.id === window.location.pathname.split("/").pop()) {
-          return (
-            <div style={styles.item} key={item.id}>
-              <div style={styles.titleDescriptionBox}>
-                <TitleDescriptionBox
-                  title={item.title}
-                  description={item.description}
-                />
-              </div>
-              <div style={styles.pictureBox}>
-                <PictureBox imageUrl={item.imageUrl} />
-              </div>
-            </div>
-          );
-        }
-      })}
+    <body style={styles.b1}>
+      <div style={styles.mainContainer}>
+        <div style={styles.secondContainer}>
+          <NavigationBar />
+          <div style={styles.listView}>
+          {data.map((item) => {
+            if (item.id === window.location.pathname.split("/").pop()) {
+              return (
+                <div style={styles.item} key={item.id}>
+                  <div style={styles.titleDescriptionBox}>
+                    <TitleDescriptionBox
+                      title={item.title}
+                      description={item.description}
+                    />
+                  </div>
+                  <div style={styles.pictureBox}>
+                    <PictureBox imageUrl={item.imageUrl} />
+                  </div>
+                </div>
+              );
+            }
+          })}
+          </div>
+        </div>
       </div>
-    </div>
+    </body>
   );
 };
 
 const styles = {
-  container: {
-    backgroundColor: "#fff"
+  b1: {
+    height: '100%',
+    width: '100%',
+  },
+  mainContainer: {
+    backgroundColor: '#fafcfe',
+    height: '100vh',
+    
+  },
+  secondContainer: {
+    backgroundColor: '#eef1f7',
+    marginLeft: 56,
+    marginRight: 56,
+    paddingBottom: 15,
+    borderRadius: 20,
+    
   },
   item: {
     display: "flex",
