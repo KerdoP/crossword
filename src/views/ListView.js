@@ -1,7 +1,7 @@
 import React from 'react';
 import TitleDescriptionBox from '../components/TitleDescriptionBox';
 import PictureBox from '../components/PictureBox';
-import data from '../data';
+import { data } from '../storage';
 import { useNavigate } from 'react-router-dom';
 import NavigationBar from '../components/NavigationBar';
 
@@ -17,7 +17,7 @@ const ListView = () => {
             style={styles.item}
             key={item.id}
             onClick={() => {
-              navigate(`/DetailsView/${item.id}`);
+              navigate(`/Details/${item.id}`);
             }}
           >
             <div style={styles.titleDescriptionBox}>

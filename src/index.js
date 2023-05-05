@@ -3,7 +3,15 @@ import ListView from './views/ListView';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import DetailsView from './views/DetailsView';
+import { CreateView } from './views/CreateView';
+import EditView from './views/EditView';
+import CrosswordLogic from './components/CrosswordLogic';
+import { data } from "./storage";
 
+const crossword = new CrosswordLogic(data);
+
+console.log(crossword.getGrid()); // logs the crossword grid
+console.log(crossword.getClues()); // logs the crossword clues
 
 const router = createBrowserRouter([
   {
@@ -11,8 +19,16 @@ const router = createBrowserRouter([
     element: <ListView />,
   },
   {
-    path: "/DetailsView/:id",
+    path: "/Details/:id",
     element: <DetailsView />,
+  },
+  {
+    path: "/Create",
+    element: <CreateView />,
+  },
+  {
+    path: "/Edit/:id",
+    element: <EditView />
   }
 ]);
 

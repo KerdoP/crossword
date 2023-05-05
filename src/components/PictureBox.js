@@ -3,7 +3,7 @@ import React from 'react';
 const PictureBox = ({ imageUrl }) => {
   return (
     <div style={styles.container}>
-      <img src={imageUrl} style={styles.image} alt="Image" />
+      <img src={imageUrl} style={styles.image} alt="crossword" />
     </div>
   );
 };

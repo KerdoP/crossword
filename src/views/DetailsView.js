@@ -1,10 +1,53 @@
 import React from "react";
 import TitleDescriptionBox from "../components/TitleDescriptionBox";
 import PictureBox from "../components/PictureBox";
-import data from "../data";
+import { data } from "../storage";
 import NavigationBar from "../components/NavigationBar";
+import { useNavigate } from "react-router-dom";
+import Crossword from '@jaredreisinger/react-crossword';
+import CrosswordLogic from '../components/CrosswordLogic';
+
 
 const DetailsView = () => {
+  const navigate = useNavigate();
+  const id = window.location.pathname.split("/").pop();
+
+  const dummyData = {
+    across: {
+      1: {
+        clue: "one plus one",
+        answer: "TWO",
+        row: 0,
+        col: 0,
+      },
+      2: {
+        clue: "three minus two",
+        answer: "ONE",
+        row: 0,
+        col: 1,
+      }
+    },
+    down: {
+      1: {
+        clue: "six divided by two",
+        answer: "THREE",
+        row: 0,
+        col: 0,
+      },
+      2: {
+        clue: "six times three",
+        answer: "EIGHTEEN",
+        row: 0,
+        col: 3,
+      }
+    }
+  };
+
+  function handleDelete() {
+    const updatedData = data.filter((item) => item.id !== id);
+    localStorage.setItem("data", JSON.stringify(updatedData));
+    navigate(`/`);
+  }
   return (
     <div style={styles.container}>
       <NavigationBar />
@@ -18,9 +61,34 @@ const DetailsView = () => {
                   title={item.title}
                   description={item.description}
                 />
+                <div>
+                  <button>
+                    <a href={`/Edit/${item.id}`}>Edit</a>
+                  </button>
+                  <button>
+                    <a onClick={handleDelete}>Delete</a>
+                  </button>
+                </div>
+                <div>
+                  <h3>Answers:</h3>
+                  <ol>
+                    {item.answer.map((answer) => (
+                      <li>{answer}</li>
+                    ))}
+                  </ol>
+                  <h3>Hints:</h3>
+                  <ol>
+                    {item.hint.map((hint) => (
+                      <li>{hint}</li>
+                    ))}
+                  </ol>
+                  </div>
               </div>
               <div style={styles.pictureBox}>
                 <PictureBox imageUrl={item.imageUrl} />
+              </div>
+              <div>
+                <Crossword data={dummyData} />
               </div>
             </div>
           );
