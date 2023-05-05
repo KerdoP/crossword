@@ -20,6 +20,12 @@ const data = [
         answer: [1,2,3],
         hint: [1,2,3]
     },
+    {
+        id: '4',
+        title: 'Item 4',
+        description: 'This is item 4',
+        imageUrl: 'https://racismnoway.com.au/wp-content/uploads/2016/06/crossword-discrimination.gif',
+    },
 ];
 
 
