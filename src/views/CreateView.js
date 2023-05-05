@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { data } from '../storage';
+import NavigationBar from '../components/NavigationBar';
 
 function CreateView() {
   const [title, setTitle] = useState('');
@@ -30,56 +31,87 @@ function CreateView() {
     event.preventDefault();
 
     const newObject = {
-        id: (data.length + 1).toString(),
-        title: title,
-        description: description,
-        answer: answerHints.map(answerHint => answerHint.answer),
-        hint: answerHints.map(answerHint => answerHint.hint)
-      };
+      id: (data.length + 1).toString(),
+      title: title,
+      description: description,
+      answer: answerHints.map(answerHint => answerHint.answer),
+      hint: answerHints.map(answerHint => answerHint.hint)
+    };
     data.push(newObject);
 
     localStorage.setItem('data', JSON.stringify(data));
-    
-    navigate('/'); 
+
+    navigate('/');
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label>
-        Title:
-        <input type="text" value={title} onChange={handleTitleChange} />
-      </label>
-      <br />
-      <label>
-        Description:
-        <textarea value={description} onChange={handleDescriptionChange} />
-      </label>
-      <br />
-      <label>
-        Answers and Hints:
-      </label>
-      {answerHints.map((answerHint, index) => (
-        <div key={index}>
-          <label>
-            Answer:
-            <input type="text" value={answerHint.answer} onChange={(event) => handleAnswerHintChange(index, 'answer', event.target.value)} />
-          </label>
-          <label>
-            Hint:
-            <input type="text" value={answerHint.hint} onChange={(event) => handleAnswerHintChange(index, 'hint', event.target.value)} />
-          </label>
+    <body style={styles.b1}>
+      <div style={styles.mainContainer}>
+        <div style={styles.secondContainer}>
+          <NavigationBar />
+          <form onSubmit={handleSubmit}>
+            <label style={styles.containerItem}>
+              Title:
+              <input type="text" value={title} onChange={handleTitleChange} />
+            </label>
+            <br />
+            <label style={styles.containerItem}>
+              Description:
+              <textarea value={description} onChange={handleDescriptionChange} />
+            </label>
+            <br />
+            <label style={styles.containerItem}>
+              Answers and Hints:
+            </label>
+            {answerHints.map((answerHint, index) => (
+              <div key={index}>
+                <label style={styles.containerItem}>
+                  Answer:
+                  <input type="text" value={answerHint.answer} onChange={(event) => handleAnswerHintChange(index, 'answer', event.target.value)} />
+                </label>
+                <label style={styles.containerItem}>
+                  Hint:
+                  <input type="text" value={answerHint.hint} onChange={(event) => handleAnswerHintChange(index, 'hint', event.target.value)} />
+                </label>
+              </div>
+            ))}
+            <button type="button" onClick={handleAddAnswerHint} style={styles.containerItem}>
+              Add Answer and Hint
+            </button>
+            <br />
+            <button type="submit" style={styles.containerItem}>
+              Submit
+            </button>
+          </form>
         </div>
-      ))}
-      <button type="button" onClick={handleAddAnswerHint}>
-        Add Answer and Hint
-      </button>
-      <br />
-      <button type="submit">
-        Submit
-      </button>
-    </form>
+      </div>
+    </body >
   );
 }
+
+const styles = {
+  b1: {
+    height: '100%',
+    width: '100%',
+  },
+  mainContainer: {
+    backgroundColor: '#fafcfe',
+    height: '100vh',
+    paddingTop: 75,
+  },
+  secondContainer: {
+    backgroundColor: '#eef1f7',
+    marginLeft: 56,
+    marginRight: 56,
+    borderRadius: 20,
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  containerItem: {
+    marginTop: 10,
+  },
+};
 
 export { CreateView, data };
 

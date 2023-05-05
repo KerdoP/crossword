@@ -1,6 +1,5 @@
 import React from 'react';
 import TitleDescriptionBox from '../components/TitleDescriptionBox';
-import PictureBox from '../components/PictureBox';
 import { data } from '../storage';
 import { useNavigate } from 'react-router-dom';
 import NavigationBar from '../components/NavigationBar';
@@ -8,65 +7,62 @@ import NavigationBar from '../components/NavigationBar';
 const ListView = () => {
   const navigate = useNavigate();
   return (
-    <div style={styles.mainContainer}>
-      <div style={styles.secondContainer}>
-        <NavigationBar />
-        <div style={styles.listView}>
-        {data.map((item) => {
-          return (
-            <div
-              style={styles.item}
-              key={item.id}
-              onClick={() => {
-                navigate(`/Details/${item.id}`);
-              }}
-            >
-              <div style={styles.titleDescriptionBox}>
-                <TitleDescriptionBox title={item.title} description={item.description} />
-              </div>
-              <div style={styles.pictureBox}>
-                <PictureBox imageUrl={item.imageUrl} />
-              </div>
-            </div>
-          );
-        })}
+    <body style={styles.b1}>
+      <div style={styles.mainContainer}>
+        <div style={styles.secondContainer}>
+          <NavigationBar />
+          <div style={styles.listView}>
+            {data.map((item) => {
+              return (
+                <div
+                  style={styles.item}
+                  key={item.id}
+                  onClick={() => {
+                    navigate(`/Details/${item.id}`);
+                  }}
+                >
+                  <div style={styles.titleDescriptionBox}>
+                    <TitleDescriptionBox title={item.title} description={item.description} />
+                  </div>
+                </div>
+              );
+            })}
+          </div>
         </div>
       </div>
-    </div>
+    </body>
   );
 }
 
 const styles = {
+  b1: {
+    height: '100%',
+    width: '100%',
+  },
   mainContainer: {
     backgroundColor: '#fafcfe',
+    height: '100vh',
+    paddingTop: 75,
   },
   secondContainer: {
     backgroundColor: '#eef1f7',
     marginLeft: 56,
     marginRight: 56,
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-  },
-  item: {
+    borderRadius: 20,
     display: 'flex',
-    flexDirection: 'row',
-    marginVertical: 10,
-  },
-  titleDescriptionBox: {
-    flex: 1,
-  },
-  pictureBox: {
-    flex: 1,
-  },
-  '@media (max-width: 600px)': {
-    item: {
-      flexDirection: 'column',
-    },
+    flexDirection: 'column',
+    alignItems: 'center',
   },
   listView: {
-    marginTop: 50,
-    marginLeft: 16,
-    marginRight: 16,
+    columnGap: 500,
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  item: {
+    width: 300,
+    marginBottom: 'auto',
   },
 };
 

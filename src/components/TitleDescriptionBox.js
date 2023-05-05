@@ -22,6 +22,8 @@ const styles = {
   },
   description: {
     fontSize: 18,
+    overflowWrap: 'break-word',
+    wordWrap: 'break-word',
   },
 };
 

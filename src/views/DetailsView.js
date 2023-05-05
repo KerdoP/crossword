@@ -1,6 +1,5 @@
 import React from "react";
 import TitleDescriptionBox from "../components/TitleDescriptionBox";
-import PictureBox from "../components/PictureBox";
 import { data } from "../storage";
 import NavigationBar from "../components/NavigationBar";
 import { useNavigate } from "react-router-dom";
@@ -54,48 +53,45 @@ const DetailsView = () => {
         <div style={styles.secondContainer}>
           <NavigationBar />
           <div style={styles.listView}>
-          {data.map((item) => {
-            if (item.id === window.location.pathname.split("/").pop()) {
-              return (
-                <div style={styles.item} key={item.id}>
-                  <div style={styles.titleDescriptionBox}>
-                    <TitleDescriptionBox
-                      title={item.title}
-                      description={item.description}
-                    />
-                <div>
-                  <button>
-                    <a href={`/Edit/${item.id}`}>Edit</a>
-                  </button>
-                  <button>
-                    <a onClick={handleDelete}>Delete</a>
-                  </button>
-                </div>
-                <div>
-                  <h3>Answers:</h3>
-                  <ol>
-                    {item.answer.map((answer) => (
-                      <li>{answer}</li>
-                    ))}
-                  </ol>
-                  <h3>Hints:</h3>
-                  <ol>
-                    {item.hint.map((hint) => (
-                      <li>{hint}</li>
-                    ))}
-                  </ol>
+            {data.map((item) => {
+              if (item.id === window.location.pathname.split("/").pop()) {
+                return (
+                  <div style={styles.item} key={item.id}>
+                    <div style={styles.titleDescriptionBox}>
+                      <TitleDescriptionBox
+                        title={item.title}
+                        description={item.description}
+                      />
+                      <div>
+                        <button>
+                          <a href={`/Edit/${item.id}`}>Edit</a>
+                        </button>
+                        <button>
+                          <a onClick={handleDelete}>Delete</a>
+                        </button>
+                      </div>
+                      <div>
+                        <h3>Answers:</h3>
+                        <ol>
+                          {item.answer.map((answer) => (
+                            <li>{answer}</li>
+                          ))}
+                        </ol>
+                        <h3>Hints:</h3>
+                        <ol>
+                          {item.hint.map((hint) => (
+                            <li>{hint}</li>
+                          ))}
+                        </ol>
+                      </div>
+                    </div>
+                    <div>
+                      <Crossword data={dummyData} />
+                    </div>
                   </div>
-                  </div>
-                  <div style={styles.pictureBox}>
-                    <PictureBox imageUrl={item.imageUrl} />
-                  </div>
-              <div>
-                <Crossword data={dummyData} />
-              </div>
-                </div>
-              );
-            }
-          })}
+                );
+              }
+            })}
           </div>
         </div>
       </div>
@@ -111,7 +107,7 @@ const styles = {
   mainContainer: {
     backgroundColor: '#fafcfe',
     height: '100vh',
-    
+
   },
   secondContainer: {
     backgroundColor: '#eef1f7',
@@ -119,7 +115,7 @@ const styles = {
     marginRight: 56,
     paddingBottom: 15,
     borderRadius: 20,
-    
+
   },
   item: {
     display: "flex",
@@ -127,9 +123,6 @@ const styles = {
     marginVertical: 10
   },
   titleDescriptionBox: {
-    flex: 1
-  },
-  pictureBox: {
     flex: 1
   },
   listView: {

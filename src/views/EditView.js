@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { data } from '../storage';
+import NavigationBar from '../components/NavigationBar';
 
 function EditView() {
   const [title, setTitle] = useState('');
@@ -55,46 +56,74 @@ function EditView() {
     const updatedData = data.map(item => item.id === id ? updatedObject : item);
 
     localStorage.setItem('data', JSON.stringify(updatedData));
-    
+
     navigate(`/details/${id}`); // navigate back to details view
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label>
-        Title:
-        <input type="text" value={title} onChange={handleTitleChange} />
-      </label>
-      <br />
-      <label>
-        Description:
-        <textarea value={description} onChange={handleDescriptionChange} />
-      </label>
-      <br />
-      <label>
-        Answers and Hints:
-      </label>
-      {answerHints.map((answerHint, index) => (
-        <div key={index}>
-          <label>
-            Answer:
-            <input type="text" value={answerHint.answer} onChange={(event) => handleAnswerHintChange(index, 'answer', event.target.value)} />
-          </label>
-          <label>
-            Hint:
-            <input type="text" value={answerHint.hint} onChange={(event) => handleAnswerHintChange(index, 'hint', event.target.value)} />
-          </label>
+    <body style={styles.b1}>
+      <div style={styles.mainContainer}>
+        <div style={styles.secondContainer}>
+          <NavigationBar />
+          <form onSubmit={handleSubmit}>
+            <label>
+              Title:
+              <input type="text" value={title} onChange={handleTitleChange} />
+            </label>
+            <br />
+            <label>
+              Description:
+              <textarea value={description} onChange={handleDescriptionChange} />
+            </label>
+            <br />
+            <label>
+              Answers and Hints:
+            </label>
+            {answerHints.map((answerHint, index) => (
+              <div key={index}>
+                <label>
+                  Answer:
+                  <input type="text" value={answerHint.answer} onChange={(event) => handleAnswerHintChange(index, 'answer', event.target.value)} />
+                </label>
+                <label>
+                  Hint:
+                  <input type="text" value={answerHint.hint} onChange={(event) => handleAnswerHintChange(index, 'hint', event.target.value)} />
+                </label>
+              </div>
+            ))}
+            <button type="button" onClick={handleAddAnswerHint}>
+              Add Answer and Hint
+            </button>
+            <br />
+            <button type="submit">
+              Submit
+            </button>
+          </form>
         </div>
-      ))}
-      <button type="button" onClick={handleAddAnswerHint}>
-        Add Answer and Hint
-      </button>
-      <br />
-      <button type="submit">
-        Submit
-      </button>
-    </form>
+      </div>
+    </body>
   );
 }
+
+const styles = {
+  b1: {
+    height: '100%',
+    width: '100%',
+  },
+  mainContainer: {
+    backgroundColor: '#fafcfe',
+    height: '100vh',
+    paddingTop: 75,
+  },
+  secondContainer: {
+    backgroundColor: '#eef1f7',
+    marginLeft: 56,
+    marginRight: 56,
+    borderRadius: 20,
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+};
 
 export default EditView;
