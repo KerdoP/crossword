@@ -11,11 +11,23 @@ const DetailsView = () => {
 
     function handleDelete() {
         const updatedData = data.filter((item) => item.id !== id);
+        const updatedCrossword = crossword.filter((item) => item.id !== id);
         localStorage.setItem("data", JSON.stringify(updatedData));
+        localStorage.setItem("crosswordData", JSON.stringify(updatedCrossword));
         navigate(`/`);
     }
 
-    const crosswordData = JSON.parse(JSON.stringify(crossword[id - 1]));
+    let crosswordData = {};
+
+    crossword.map((item) => {
+        if (item.id === window.location.pathname.split("/").pop()) {
+            //save the crossword object to crosswordData variable without the id
+            crosswordData = {
+                across: item.across,
+                down: item.down,
+            };
+        }
+    });
 
     return (
         <body style={styles.b1}>

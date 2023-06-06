@@ -49,7 +49,13 @@ function CreateView() {
 
         const newCrossword = createCrossword(newObject);
 
-        crossword.push(newCrossword);
+        const finalCrossword = {
+            id: (crossword.length + 1).toString(),
+            across: newCrossword.across,
+            down: newCrossword.down
+        }
+
+        crossword.push(finalCrossword);
 
         localStorage.setItem('crosswordData', JSON.stringify(crossword));
         localStorage.setItem('data', JSON.stringify(data));

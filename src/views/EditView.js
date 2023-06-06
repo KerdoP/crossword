@@ -64,8 +64,14 @@ function EditView() {
     
         // Update the crossword array with the new crossword object
         const updatedCrossword = createCrossword(updatedObject);
+
+        const finalCrossword = {
+            id: id,
+            across: updatedCrossword.across,
+            down: updatedCrossword.down,
+        };
         
-        const updatedCrosswordArray = crossword.map((item, index) => index === id - 1 ? updatedCrossword : item);
+        const updatedCrosswordArray = crossword.map(item => item.id === id ? finalCrossword : item);
     
         localStorage.setItem('data', JSON.stringify(updatedData));
         localStorage.setItem('crosswordData', JSON.stringify(updatedCrosswordArray));
@@ -113,6 +119,8 @@ function EditView() {
                         <button type="button" onClick={handleDeleteAnswerClue}>
                             Delete Answer and Clue
                         </button>
+                        <br />
+                        <p>WARNING! Clicking submit will reshuffle the crossword. This may result in changes to the layout of your crossword.</p>
                         <br />
                         <button type="submit">
                             Submit
