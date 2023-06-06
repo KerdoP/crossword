@@ -28,6 +28,13 @@ function CreateView() {
         setAnswerClue([...answerClue, { answer: '', clue: '' }]);
     }
 
+    function handleDeleteAnswerClue() {
+        const newAnswerClue = [...answerClue];
+        if (newAnswerClue.length === 1) return; // Don't delete the last answer and clue
+        newAnswerClue.pop(); // Remove the last element from the array
+        setAnswerClue(newAnswerClue);
+    }
+
     function handleSubmit(event) {
         event.preventDefault();
 
@@ -40,11 +47,9 @@ function CreateView() {
         };
         data.push(newObject);
 
-
         const newCrossword = createCrossword(newObject);
 
         crossword.push(newCrossword);
-
 
         localStorage.setItem('crosswordData', JSON.stringify(crossword));
         localStorage.setItem('data', JSON.stringify(data));
@@ -85,6 +90,10 @@ function CreateView() {
                         ))}
                         <button type="button" onClick={handleAddAnswerClue} style={styles.containerItem}>
                             Add Answer and Clue
+                        </button>
+                        <br />
+                        <button type="button" onClick={handleDeleteAnswerClue} style={styles.containerItem}>
+                            Delete Answer and Clue
                         </button>
                         <br />
                         <button type="submit" style={styles.containerItem}>

@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { data } from '../storage';
+import { data, crossword } from '../storage';
 import NavigationBar from '../components/NavigationBar';
+import createCrossword from '../components/CrosswordLogic';
 
 function EditView() {
     const [title, setTitle] = useState('');
@@ -41,9 +42,16 @@ function EditView() {
         setAnswerClue([...answerClue, { answer: '', clue: '' }]);
     }
 
+    function handleDeleteAnswerClue() {
+        const newAnswerClue = [...answerClue];
+        if (newAnswerClue.length === 1) return; // Don't delete the last answer and clue
+        newAnswerClue.pop(); // Remove the last element from the array
+        setAnswerClue(newAnswerClue);
+    }
+
     function handleSubmit(event) {
         event.preventDefault();
-
+    
         const updatedObject = {
             id: id,
             title: title,
@@ -51,13 +59,21 @@ function EditView() {
             answer: answerClue.map(answerClue => answerClue.answer),
             clue: answerClue.map(answerClue => answerClue.clue),
         };
-
+    
         const updatedData = data.map(item => item.id === id ? updatedObject : item);
-
+    
+        // Update the crossword array with the new crossword object
+        const updatedCrossword = createCrossword(updatedObject);
+        
+        const updatedCrosswordArray = crossword.map((item, index) => index === id - 1 ? updatedCrossword : item);
+    
         localStorage.setItem('data', JSON.stringify(updatedData));
-
+        localStorage.setItem('crosswordData', JSON.stringify(updatedCrosswordArray));
+    
         navigate(`/details/${id}`); // navigate back to details view
     }
+    
+    
 
     return (
         <body style={styles.b1}>
@@ -92,6 +108,10 @@ function EditView() {
                         ))}
                         <button type="button" onClick={handleAddAnswerClue}>
                             Add Answer and Clue
+                        </button>
+                        <br />
+                        <button type="button" onClick={handleDeleteAnswerClue}>
+                            Delete Answer and Clue
                         </button>
                         <br />
                         <button type="submit">
