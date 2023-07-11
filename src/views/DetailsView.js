@@ -4,12 +4,14 @@ import { data, crossword } from "../storage";
 import NavigationBar from "../components/NavigationBar";
 import { useNavigate } from "react-router-dom";
 import Crossword from '@jaredreisinger/react-crossword';
+import Button from "../components/Button";
 
 const DetailsView = () => {
     const navigate = useNavigate();
     const id = window.location.pathname.split("/").pop();
 
     function handleDelete() {
+        console.log("oioi");
         const updatedData = data.filter((item) => item.id !== id);
         const updatedCrossword = crossword.filter((item) => item.id !== id);
         localStorage.setItem("data", JSON.stringify(updatedData));
@@ -29,65 +31,65 @@ const DetailsView = () => {
         }
     });
 
+    const crosswordTheme = {
+        gridBackground: '#fafcfe', // Customize the background color of the crossword grid here
+        cellBackground: '#eef1f7',
+        cellBorder: '#000000',
+        focusBackground: '#b1b5be',
+        highlightBackground: '#c3c7d0',
+    };
+
     return (
-        <body style={styles.b1}>
-            <div style={styles.mainContainer}>
-                <div style={styles.secondContainer}>
-                    <NavigationBar />
-                    <div style={styles.listView}>
-                        {data.map((item) => {
-                            if (item.id === window.location.pathname.split("/").pop()) {
-                                return (
-                                    <div style={styles.item} key={item.id}>
-                                        <div style={styles.titleDescriptionBox}>
-                                            <TitleDescriptionBox
-                                                title={item.title}
-                                                description={item.description}
-                                            />
-                                            <div>
-                                                <button>
-                                                    <a href={`/Edit/${item.id}`}>Edit</a>
-                                                </button>
-                                                <button>
-                                                    <a onClick={handleDelete}>Delete</a>
-                                                </button>
-                                            </div>
-                                        </div>
+        <div style={styles.container}>
+            <NavigationBar />
+            <div style={styles.content}>
+                {data.map((item) => {
+                    if (item.id === window.location.pathname.split("/").pop()) {
+                        return (
+                            <div style={styles.item} key={item.id}>
+                                <div style={styles.titleDescriptionBox}>
+                                    <TitleDescriptionBox
+                                        title={item.title}
+                                        description={item.description}
+                                    />
+                                    <div style={styles.buttonsContainer}>
+                                        <Button
+                                            name="Edit"
+                                            link={`/Edit/${item.id}`}
+                                            type="button"
+                                        />
+                                        <Button
+                                            name="Delete"
+                                            action={handleDelete}
+                                            type="button"
+                                        />
                                     </div>
-                                );
-                            }
-                        })}
-                        <div style={styles.epic}>
-                            <Crossword data={crosswordData} />
-                        </div>
-                    </div>
+                                </div>
+                            </div>
+                        );
+                    }
+                    return null; // Add a return statement for the map function
+                })}
+                <div className="crossword-container" style={styles.crosswordContainer}>
+                    <Crossword className="crossword-grid" data={crosswordData} theme={crosswordTheme} />
                 </div>
             </div>
-        </body>
+        </div>
     );
 };
 
 const styles = {
-    b1: {
-        height: '100%',
-        width: '100%',
-    },
-    epic: {
-        display: 'flex',
-        justifyContent: 'center',
-        height: '60%',
-        width: '60%',
-    },
-    mainContainer: {
+    container: {
         backgroundColor: '#fafcfe',
-        height: '100vh',
+        minHeight: '100vh',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
     },
-    secondContainer: {
-        backgroundColor: '#eef1f7',
-        marginLeft: 56,
-        marginRight: 56,
-        paddingBottom: 15,
-        borderRadius: 20,
+    content: {
+        maxWidth: '600px',
+        padding: '30px',
+        width: '100%',
     },
     item: {
         display: "flex",
@@ -97,10 +99,14 @@ const styles = {
     titleDescriptionBox: {
         flex: 1,
     },
-    listView: {
-        marginTop: 50,
-        marginLeft: 16,
-        marginRight: 16,
+    buttonsContainer: {
+        display: 'flex',
+        marginTop: '10px',
+    },
+    crosswordContainer: {
+        display: 'flex',
+        justifyContent: 'center',
+        margin: '30px 0',
     },
 };
 

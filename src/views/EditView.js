@@ -3,6 +3,9 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { data, crossword } from '../storage';
 import NavigationBar from '../components/NavigationBar';
 import createCrossword from '../components/CrosswordLogic';
+import Button from "../components/Button";
+import TextBox from "../components/TextBox";
+import TextArea from "../components/TextArea";
 
 function EditView() {
     const [title, setTitle] = useState('');
@@ -51,6 +54,7 @@ function EditView() {
 
     function handleSubmit(event) {
         event.preventDefault();
+        console.log("Submit button clicked!"); // Check if the function is called
     
         const updatedObject = {
             id: id,
@@ -87,44 +91,49 @@ function EditView() {
                 <div style={styles.secondContainer}>
                     <NavigationBar />
                     <form onSubmit={handleSubmit}>
-                        <label>
-                            Title:
-                            <input type="text" value={title} onChange={handleTitleChange} />
-                        </label>
+                        <TextBox
+                        name="Title"
+                        value={title} 
+                        onChange={handleTitleChange}
+                        />
                         <br />
-                        <label>
-                            Description:
-                            <textarea value={description} onChange={handleDescriptionChange} />
-                        </label>
+                        <TextArea
+                        name="Description"
+                        value={description} 
+                        onChange={handleDescriptionChange}
+                        />
                         <br />
-                        <label>
-                            Answers and Clues:
-                        </label>
                         {answerClue.map((answerClue, index) => (
-                            <div key={index}>
-                                <label>
-                                    Answer:
-                                    <input type="text" value={answerClue.answer} onChange={(event) => handleAnswerClueChange(index, 'answer', event.target.value)} />
-                                </label>
-                                <label>
-                                    Clue:
-                                    <input type="text" value={answerClue.clue} onChange={(event) => handleAnswerClueChange(index, 'clue', event.target.value)} />
-                                </label>
+                            <div key={index} style={styles.containerItem}>
+                                <TextBox
+                                name="Answer"
+                                value={answerClue.answer} 
+                                onChange={(event) => handleAnswerClueChange(index, 'answer', event.target.value)}
+                                />
+                                <TextBox
+                                name="Clue"
+                                value={answerClue.clue} 
+                                onChange={(event) => handleAnswerClueChange(index, 'clue', event.target.value)}
+                                />
                             </div>
                         ))}
-                        <button type="button" onClick={handleAddAnswerClue}>
-                            Add Answer and Clue
-                        </button>
                         <br />
-                        <button type="button" onClick={handleDeleteAnswerClue}>
-                            Delete Answer and Clue
-                        </button>
+                        <Button
+                        name="Add Answer and Clue"
+                        action={handleAddAnswerClue}
+                        type="button"
+                        />
                         <br />
+                        <Button
+                        name="Delete Answer and Clue"
+                        action={handleDeleteAnswerClue}
+                        type="button"
+                        />
                         <p>WARNING! Clicking submit will reshuffle the crossword. This may result in changes to the layout of your crossword.</p>
-                        <br />
-                        <button type="submit">
-                            Submit
-                        </button>
+                        <Button
+                        name="Submit"
+                        type="submit"
+                        />
                     </form>
                 </div>
             </div>
@@ -149,6 +158,11 @@ const styles = {
         borderRadius: 20,
         display: 'flex',
         flexDirection: 'column',
+        alignItems: 'center',
+    },
+    containerItem: {
+        marginTop: 10,
+        display: 'flex',
         alignItems: 'center',
     },
 };
